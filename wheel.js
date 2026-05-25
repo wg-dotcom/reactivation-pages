@@ -10,9 +10,36 @@
   ];
 
   const COLORS = ['#c4293c', '#1a2744', '#e8354a', '#243358', '#d44558', '#2d3f66'];
-  const STORAGE_KEY = 'sagan_spin_' + document.body.dataset.company;
+  const COMPANY = document.body.dataset.company || 'unknown';
+  const STORAGE_KEY = 'sagan_spin_' + COMPANY;
+  const COOKIE_KEY = 'sagan_spun_' + COMPANY;
 
-  let canvas, ctx, spinning = false, currentAngle = 0;
+  let canvas, ctx, spinning = false, currentAngle = 0, hasSpun = false;
+
+  function setCookie(name, value, days) {
+    var d = new Date();
+    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+    document.cookie = name + '=' + value + ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax';
+  }
+
+  function getCookie(name) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+  }
+
+  function alreadySpun() {
+    return hasSpun
+      || localStorage.getItem(STORAGE_KEY)
+      || sessionStorage.getItem(STORAGE_KEY)
+      || getCookie(COOKIE_KEY);
+  }
+
+  function lockSpin(perk) {
+    hasSpun = true;
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(perk)); } catch(e) {}
+    try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch(e) {}
+    setCookie(COOKIE_KEY, '1', 90);
+  }
 
   function init() {
     canvas = document.getElementById('wheelCanvas');
@@ -21,30 +48,34 @@
     canvas.width = 300;
     canvas.height = 300;
 
-    const saved = localStorage.getItem(STORAGE_KEY);
+    var saved = alreadySpun();
     if (saved) {
-      showResult(JSON.parse(saved));
+      var perkData = null;
+      try { perkData = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch(e) {}
+      if (perkData) {
+        showResult(perkData);
+      }
       disableBtn();
     }
 
     drawWheel(0);
 
-    const btn = document.getElementById('spinBtn');
+    var btn = document.getElementById('spinBtn');
     if (btn) btn.addEventListener('click', spin);
 
-    const form = document.getElementById('perkContactForm');
+    var form = document.getElementById('perkContactForm');
     if (form) form.addEventListener('submit', handleFormSubmit);
   }
 
   function drawWheel(angle) {
-    const cx = 150, cy = 150, r = 140;
-    const sliceAngle = (2 * Math.PI) / PERKS.length;
+    var cx = 150, cy = 150, r = 140;
+    var sliceAngle = (2 * Math.PI) / PERKS.length;
 
     ctx.clearRect(0, 0, 300, 300);
 
     PERKS.forEach(function(perk, i) {
-      const start = angle + i * sliceAngle;
-      const end = start + sliceAngle;
+      var start = angle + i * sliceAngle;
+      var end = start + sliceAngle;
 
       ctx.beginPath();
       ctx.moveTo(cx, cy);
@@ -93,12 +124,12 @@
   }
 
   function spin() {
-    if (spinning) return;
-    if (localStorage.getItem(STORAGE_KEY)) return;
+    if (spinning || alreadySpun()) return;
 
     spinning = true;
+    hasSpun = true;
     var btn = document.getElementById('spinBtn');
-    btn.disabled = true;
+    if (btn) { btn.disabled = true; btn.textContent = 'Spinning...'; }
 
     var winIndex = Math.floor(Math.random() * PERKS.length);
     var sliceAngle = (2 * Math.PI) / PERKS.length;
@@ -126,8 +157,9 @@
       } else {
         spinning = false;
         var perk = PERKS[winIndex];
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(perk));
+        lockSpin(perk);
         showResult(perk);
+        disableBtn();
         notifySpin(perk);
       }
     }
@@ -136,10 +168,9 @@
   }
 
   function notifySpin(perk) {
-    var company = document.body.dataset.company || 'unknown';
     var data = new FormData();
-    data.append('_subject', 'Wheel spin: ' + perk.name + ' — ' + company);
-    data.append('company', company);
+    data.append('_subject', 'Wheel spin: ' + perk.name + ' — ' + COMPANY);
+    data.append('company', COMPANY);
     data.append('perk', perk.name);
     data.append('type', 'spin-notification');
     data.append('timestamp', new Date().toISOString());
@@ -168,6 +199,8 @@
     if (btn) {
       btn.disabled = true;
       btn.textContent = 'Already spun';
+      btn.style.opacity = '0.4';
+      btn.style.cursor = 'not-allowed';
     }
   }
 
@@ -188,7 +221,7 @@
       }
     }).catch(function() {
       window.location.href = 'mailto:jesus.p@getsagan.com?subject=Reactivation%20-%20' +
-        encodeURIComponent(document.body.dataset.company);
+        encodeURIComponent(COMPANY);
     });
   }
 
