@@ -1,12 +1,12 @@
 /* Sagan Reactivation — Spin Wheel + Contact Form */
 (function() {
   const PERKS = [
-    { name: 'Free Hire', desc: 'We cover our placement fee for your next hire. No cost to you.' },
-    { name: 'Extended Guarantee', desc: '60-day replacement guarantee. Double the standard 30-day.' },
-    { name: 'Priority Queue', desc: 'Jump to the front of our candidate pipeline. First pick on new matches.' },
-    { name: 'Free Hire', desc: 'We cover our placement fee for your next hire. No cost to you.' },
-    { name: 'Extended Guarantee', desc: '60-day replacement guarantee. Double the standard 30-day.' },
-    { name: 'Priority Queue', desc: 'Jump to the front of our candidate pipeline. First pick on new matches.' }
+    { name: 'Free Hire', desc: 'A free Talent Agent placement. Pre-vetted, video-screened, full candidate package included. No placement fee.' },
+    { name: 'Extended Guarantee', desc: '60-day replacement guarantee. Double the standard 30-day window.' },
+    { name: 'Free Hire + Extended Guarantee', desc: 'Both perks combined. A free Talent Agent placement with a 60-day replacement guarantee included.' },
+    { name: 'Free Hire', desc: 'A free Talent Agent placement. Pre-vetted, video-screened, full candidate package included. No placement fee.' },
+    { name: 'Extended Guarantee', desc: '60-day replacement guarantee. Double the standard 30-day window.' },
+    { name: 'Free Hire + Extended Guarantee', desc: 'Both perks combined. A free Talent Agent placement with a 60-day replacement guarantee included.' }
   ];
 
   const COLORS = ['#c4293c', '#1a2744', '#e8354a', '#243358', '#d44558', '#2d3f66'];
