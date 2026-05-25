@@ -192,6 +192,24 @@
 
     var hiddenPerk = document.getElementById('perkValue');
     if (hiddenPerk) hiddenPerk.value = perk.name;
+
+    updateMailtoLinks(perk);
+  }
+
+  function updateMailtoLinks(perk) {
+    var links = document.querySelectorAll('a[href^="mailto:jesus.p@getsagan.com"]');
+    var perkLine = encodeURIComponent('\n\nPerk I landed on: ' + perk.name + '\n(' + perk.desc + ')');
+    links.forEach(function(link) {
+      var href = link.getAttribute('href');
+      var bodyMatch = href.match(/body=([^&]*)/);
+      if (bodyMatch) {
+        var existingBody = bodyMatch[1];
+        var newBody = existingBody + perkLine;
+        link.setAttribute('href', href.replace(/body=[^&]*/, 'body=' + newBody));
+      } else {
+        link.setAttribute('href', href + '&body=' + perkLine);
+      }
+    });
   }
 
   function disableBtn() {
