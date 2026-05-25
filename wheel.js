@@ -128,10 +128,26 @@
         var perk = PERKS[winIndex];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(perk));
         showResult(perk);
+        notifySpin(perk);
       }
     }
 
     requestAnimationFrame(animate);
+  }
+
+  function notifySpin(perk) {
+    var company = document.body.dataset.company || 'unknown';
+    var data = new FormData();
+    data.append('_subject', 'Wheel spin: ' + perk.name + ' — ' + company);
+    data.append('company', company);
+    data.append('perk', perk.name);
+    data.append('type', 'spin-notification');
+    data.append('timestamp', new Date().toISOString());
+    fetch('https://formspree.io/f/xpwrbjqk', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).catch(function() {});
   }
 
   function showResult(perk) {
