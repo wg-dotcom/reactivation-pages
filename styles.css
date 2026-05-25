@@ -633,6 +633,63 @@ body {
   padding-left: 16px;
 }
 
+/* MEMORIAL DAY BRANDING */
+.memorial-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.memorial-banner .flag {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.memorial-banner .memorial-text {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+
+.memorial-stars {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.memorial-stars span {
+  color: rgba(255,255,255,0.2);
+  font-size: 10px;
+  letter-spacing: 4px;
+}
+
+.deadline-badge.memorial {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.2);
+  position: relative;
+}
+
+.perks-section .memorial-stripe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #B22234 33%, #FFFFFF 33%, #FFFFFF 66%, #3C3B6E 66%);
+  border-radius: 12px 12px 0 0;
+  opacity: 0.6;
+}
+
+.perks-section {
+  position: relative;
+  overflow: hidden;
+}
+
 /* PERK RESULT (after spin) */
 .perk-result {
   display: none;
