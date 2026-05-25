@@ -650,44 +650,9 @@ body {
 }
 
 /* MEMORIAL DAY BRANDING */
-.memorial-banner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 32px;
-}
-
-.memorial-banner .flag {
-  font-size: 22px;
-  line-height: 1;
-}
-
-.memorial-banner .memorial-text {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
-}
-
-.memorial-stars {
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin-bottom: 20px;
-}
-
-.memorial-stars span {
-  color: rgba(255,255,255,0.2);
-  font-size: 10px;
-  letter-spacing: 4px;
-}
-
-.deadline-badge.memorial {
-  background: rgba(255,255,255,0.08);
-  border-color: rgba(255,255,255,0.2);
+.perks-section {
   position: relative;
+  overflow: hidden;
 }
 
 .perks-section .memorial-stripe {
@@ -695,15 +660,60 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 5px;
   background: linear-gradient(90deg, #B22234 33%, #FFFFFF 33%, #FFFFFF 66%, #3C3B6E 66%);
-  border-radius: 12px 12px 0 0;
-  opacity: 0.6;
 }
 
-.perks-section {
-  position: relative;
-  overflow: hidden;
+.memorial-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 20px 32px;
+  margin-bottom: 36px;
+}
+
+.memorial-banner .flag {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.memorial-banner .memorial-text-wrap {
+  text-align: center;
+}
+
+.memorial-banner .memorial-stars {
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 4px;
+}
+
+.memorial-banner .memorial-text {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.memorial-banner .memorial-sub {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 2px;
+}
+
+.deadline-badge.memorial {
+  background: #B22234;
+  border-color: #B22234;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 1.5px;
 }
 
 /* PERK RESULT (after spin) */
